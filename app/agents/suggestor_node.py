@@ -1,11 +1,14 @@
 from typing import Dict, Any
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableConfig
-from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 
-from app.prompts.suggestor_prompt import SYSTEM_PROMPT, PROMPT
-from app.types.suggestor_schema import SuggestorSchema
+from app.prompts.suggestor_prompt import (
+    EXP_SYSTEM_PROMPT, EXP_PROMPT,
+    PROJ_SYSTEM_PROMPT, PROJ_PROMPT,
+    SKILLS_SYSTEM_PROMPT, SKILLS_PROMPT
+)
+from app.types.suggestor_schema import RatingSchema, SkillsSchema
 from app.types.node_state import NodeState 
 from app.config import settings
 
@@ -27,38 +30,62 @@ class SuggestorNode:
         ) 
 
         # Structured Output
-        self.llm = self.llm.with_structured_output(schema=SuggestorSchema)
+        self.judge_llm = self.llm.with_structured_output(schema=RatingSchema)
+        self.llm = self.llm.with_structured_output(schema=SkillsSchema)
 
         
-        self.prompt_template = ChatPromptTemplate.from_messages([
-            ("system", SYSTEM_PROMPT), 
-            ("human", PROMPT)
+        self.exp_prompt_template = ChatPromptTemplate.from_messages([
+            ("system", EXP_SYSTEM_PROMPT),
+            ("human", EXP_PROMPT)
         ])
 
+        self.proj_prompt_template = ChatPromptTemplate.from_messages([
+            ("system", PROJ_SYSTEM_PROMPT),
+            ("human", PROJ_PROMPT)
+        ])
+
+        self.skills_prompt_template = ChatPromptTemplate.from_messages([
+            ("system", SKILLS_SYSTEM_PROMPT),
+            ("human", SKILLS_PROMPT)
+        ])
 
     def __call__(self, state: NodeState, config: RunnableConfig) -> Dict[str, Any] | None:
+        rated_experiences = []
+        for experience in state.user_details["experiences"]:
+            prompt = self.exp_prompt_template.invoke({
+                "experience": experience,
+                "job_description": state.job_description
+            })
+
+            output = self.judge_llm.invoke(prompt)
+            rated_experiences.append((output.rating, experience))
         
-        prompt = self.prompt_template.invoke({
-            "job_description": state.job_description,
-            "experiences": state.user_details["experiences"],
-            "projects": state.user_details["projects"],
-            "skills": state.user_details["skills"]
+        rated_projects = []
+        for project in state.user_details["projects"]:
+            prompt = self.proj_prompt_template.invoke({
+                "project": project,
+                "job_description": state.job_description
+            })
+
+            output = self.judge_llm.invoke(prompt)
+            rated_projects.append((output.rating, project))
+        
+        prompt = self.skills_prompt_template.invoke({
+            "skills": state.user_details["skills"],
+            "job_description": state.job_description
         })
 
-        print("SUGGESTOR PROMPT")
-        print(prompt)
-        print("\n\n\n\n")
-
         output = self.llm.invoke(prompt)
+        relevant_skills = output.skills
 
-        print("LLM RESPONSE")
-        print(output)
+        # Sort and select 
+        rated_experiences.sort(reverse=True, key=lambda x: x[0])
+        rated_projects.sort(reverse=True, key=lambda x: x[0])
 
-        state.user_details["experiences"] = output.experiences
-        state.user_details["projects"] = output.projects
-        state.user_details["skills"] = output.skills
-
+        state.user_details["experiences"] = [exp for _, exp in rated_experiences[:2]]
+        state.user_details["projects"] = [proj for _, proj in rated_projects[:2]]
+        state.user_details["skills"] = relevant_skills
 
         return {
             "user_details": state.user_details
-        } 
+        }

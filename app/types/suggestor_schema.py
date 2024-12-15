@@ -1,8 +1,8 @@
-from typing import List, Dict
+from typing import List
 from pydantic import BaseModel, Field
 
+class RatingSchema(BaseModel):
+    rating: int = Field(description="Rating given by the expert judge.", default=5)
 
-class SuggestorSchema(BaseModel):
-    experiences: List[Dict] = Field(description="Relevant Experiences", default=[])
-    projects: List[Dict] = Field(description="Relevant Projects", default=[])
-    skills: List[str] = Field(description="Relevant Skills", default=[])
+class SkillsSchema(BaseModel):
+    skills: List[str] = Field(description="List of skills extracted from the job description.", default=[])

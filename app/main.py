@@ -54,5 +54,5 @@ graph_builder.add_edge("craft_resume", END)
 # Compile graph
 checkpointer = MemorySaver()
 graph = graph_builder.compile(
-    checkpointer=checkpointer
+    checkpointer=checkpointer,
 )

@@ -1,40 +1,50 @@
-SYSTEM_PROMPT = """
-You are an expert bot that selects relative work experiences of the user for the particular job description. 
+EXP_SYSTEM_PROMPT = """
+You're an expert judge who can give high quality rating for user's work experience to the given job description. 
+A high score indicates that the user's work experience is highly relevant to the job description and vice-versa.
 """
 
-PROMPT = """
-Job description: 
+EXP_PROMPT = """
+Rate out of 10 for the given user's work experience to the job description provided below:
+
+User's Work Experience:
+{experience}
+
+Job Description:
 {job_description}
 
-User's work experiences (A List of Dictionaries) 
-{experiences}
+Analyze and give a score out of 0-10. 
+"""
 
-User's projects (A List of Dictionaries):
-{projects}
 
-User's skills (A List):
+PROJ_SYSTEM_PROMPT = """
+You're an expert judge who can give high quality rating for user's project to the given job description.
+A high score indicates that the user's project is highly relevant to the job description and vice-versa.
+"""
+
+PROJ_PROMPT = """
+Rate out of 10 for the given user's project to the job description provided below:
+
+User's Project:
+{project}
+
+Job Description:
+{job_description}
+
+Analyze and give a score out of 0-10. 
+"""
+
+SKILLS_SYSTEM_PROMPT = """
+You're an expert judge who can select the relevant skills for the given job description.
+"""
+
+SKILLS_PROMPT = """
+Select the relevant user's skills for the job description provided below:
+
+User's skills: 
 {skills}
 
-Given the job description, user's work experience, user's projects and list of user's skills.
+Job Description:
+{job_description}
 
-USE THE FOLLOWING RULES TO SELECT USER's RELEVANT WORK EXPERIENCES, PROJECTS AND SKILLS:
-1. Select user's work experience by matching user's description of particular work experience, position to that with 
-position, responsibilities provided in  job description.
-Eg: Select software engineering work experience for SDE related roles. Select ML related work experience for ML Engineer related roles.
-
-2. Select user's projects by matching user's description of particular project to that with responsibilities 
-provided in job description.
-Eg: Select software engineering projects for SDE related roles. Select ML related projects for ML Engineer related roles.
-
-3. Select user's skills by matching user's skills to that with skills provided in job description, requirements and position of job. 
-
-NOTE: Only select from user's provided work experiences, projects and skills and not from job description.
-NOTE: Do not edit anything, just select the relevant experience as it is.
-NOTE: Select at max 2 work experiences
-NOTE: Select at max 2 projects
-NOTE: Select at max 5 skills
-
-Set "experiences" to selected work experience 
-Set "projects" to selected projects
-Set "skills" to selected skills
+NOTE: Select at max 5 skills only.
 """
