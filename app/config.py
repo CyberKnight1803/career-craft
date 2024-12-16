@@ -1,4 +1,5 @@
 import os 
+from typing import List
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -10,5 +11,12 @@ class Settings(BaseSettings):
     TEMPERATURE: float = 0.0
     MAX_TOKENS: int = 4096
     TIMEOUT: float = 300.0
+
+    GCP_SECRET_VERSION: str = os.environ["SECRET_VERSION"]
+    GCP_SCOPES: List[str] = [
+        "https://www.googleapis.com/auth/documents",
+        "https://www.googleapis.com/auth/drive",
+        "https://www.googleapis.com/auth/gmail.send"
+    ]
 
 settings  = Settings()

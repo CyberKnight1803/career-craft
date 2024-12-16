@@ -1,7 +1,7 @@
 from typing import Dict, Any
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableConfig
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, AIMessage
 from langgraph.types import interrupt
 from langchain_openai import ChatOpenAI
 
@@ -36,6 +36,7 @@ class JDANode:
         ]) 
 
     def __call__(self, state: NodeState, config: RunnableConfig) -> Dict[str, Any] | None:
+        
         prompt = self.prompt_template.invoke({
             "job_description": state.job_description
         })

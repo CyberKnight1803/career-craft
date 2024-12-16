@@ -29,8 +29,6 @@ graph_builder.add_node(node="craft_cover_letter", action=CraftCoverLetterNode())
 
 
 # # Add edges 
-graph_builder.add_edge(START, "query_preprocessor")
-
 graph_builder.add_edge("query_preprocessor", "jd_analysis")
 graph_builder.add_edge("jd_analysis", "exp_suggestor")
 
@@ -50,6 +48,8 @@ graph_builder.add_edge("cover_letter_rephraser", "craft_cover_letter")
 graph_builder.add_edge("craft_cover_letter", END)
 graph_builder.add_edge("craft_resume", END)
 
+# Start Node
+graph_builder.set_entry_point("query_preprocessor")
 
 # Compile graph
 checkpointer = MemorySaver()
