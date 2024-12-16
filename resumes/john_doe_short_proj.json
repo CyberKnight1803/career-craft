@@ -1,0 +1,94 @@
+{
+    "personal_details": {
+        "name": "John Doe",
+        "email": "john.doe@gmail.com",
+        "phone": "+1 (555) 123-4567",
+        "linkedin": "linkedin.com/in/johndoe",
+        "github": "github.com/johndoe"
+    },
+    "education": [
+        {
+            "institution": "Columbia University",
+            "degree": "M.S. in Computer Science",
+            "start_date": "Aug 2023",
+            "end_date": "Dec 2024",
+            "gpa": "4.1/4.00",
+            "courses": ["Machine Learning", "NLP", "Computer Vision", "Applied ML on Cloud"]
+        },
+        {
+            "institution": "BITS Pilani",
+            "degree": "B.E. in Computer Science",
+            "start_date": "Aug 2019",
+            "end_date": "Jul 2023",
+            "gpa": "9.35/10.00",
+            "courses": ["Algorithms", "Operating Systems", "Databases", "Networks"]
+        }
+    ],
+    "experiences": [
+        {
+            "start_date": "Jun 2024",
+            "end_date": "Aug 2024",
+            "organization": "TechCorp Solutions",
+            "position": "Software Engineer Intern",
+            "description": [
+                "Developed RESTful APIs using FastAPI to support a real-time analytics platform.",
+                "Optimized database queries, reducing response time by 30%.",
+                "Implemented unit and integration tests, improving code coverage to 90%."
+            ]
+        },
+        {
+            "start_date": "Jun 2023",
+            "end_date": "Aug 2023",
+            "organization": "Innovatech Inc.",
+            "position": "ML Engineer Intern",
+            "description": [
+                "Designed and trained a recommender system for personalized e-commerce product suggestions using PyTorch.",
+                "Deployed models on AWS Sagemaker, reducing inference time by 40%.",
+                "Built a feature pipeline for real-time data preprocessing with Apache Kafka."
+            ]
+        },
+        {
+            "start_date": "Jul 2022",
+            "end_date": "Jun 2023",
+            "organization": "NextGen Software",
+            "position": "Software Engineer Intern",
+            "description": [
+                "Contributed to the development of a microservices architecture for a high-scale fintech application.",
+                "Integrated third-party APIs for payment processing, increasing system reliability.",
+                "Collaborated with the DevOps team to establish CI/CD pipelines using Jenkins and Docker."
+            ]
+        },
+        {
+            "start_date": "May 2022",
+            "end_date": "Jul 2022",
+            "organization": "DataMind Analytics",
+            "position": "ML Research Intern",
+            "description": [
+                "Conducted exploratory data analysis on large retail datasets, identifying trends to improve sales forecasting accuracy by 15%.",
+                "Developed an anomaly detection model using scikit-learn to flag irregular transactions.",
+                "Visualized data insights with Tableau to assist business decision-making."
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "start_date": "Jan 2024",
+            "end_date": "May 2024",
+            "name": "TaskFlow: Workflow Automation Tool",
+            "github_link": "github.com/johndoe/taskflow",
+            "description": [
+                "Built a full-stack application to automate recurring tasks with dynamic scheduling.",
+                "Frontend built with React; backend implemented in Django REST framework.",
+                "Implemented OAuth-based authentication and integrated Stripe for payments."
+            ]
+        }
+    ],
+    "skills": [
+        "Python", "JavaScript", "Java", "C++",
+        "React", "Node.js", "Django", "FastAPI",
+        "PyTorch", "TensorFlow", "Scikit-learn", "Keras",
+        "Pandas", "NumPy", "Apache Kafka", "SQL",
+        "AWS", "Docker", "Jenkins", "GCP",
+        "PostgreSQL", "Git"
+    ]
+}

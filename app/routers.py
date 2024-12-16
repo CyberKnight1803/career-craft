@@ -12,9 +12,12 @@ def handle_doc_type(state: NodeState, config: RunnableConfig) -> Literal["resume
         return "cover_letter_rephraser"
     
 
-def handle_missing_jd(state: NodeState, config: RunnableConfig) -> Literal["get_missing_jd", "jd_analysis"]:
-    if state.is_jd_given:
+def handle_missing_info(state: NodeState, config: RunnableConfig) -> Literal["get_missing_jd", "get_missing_intent", "jd_analysis"]:
+    if state.is_jd_given and (state.intent != "" and state.intent is not None):
         return "jd_analysis"
 
-    else:
+    elif not state.is_jd_given:
         return "get_missing_jd"
+
+    elif (state.intent == "" or state.intent is None):
+        return "get_missing_intent"

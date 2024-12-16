@@ -38,11 +38,7 @@ class CraftCoverLetterNode:
 
         return {
             "messages": [
-                AIMessage(content="Shared your cover letter via email!"
-                f"""
-                Here's the link to your cover letter: {cover_letter_link}
-                """
-                ),
+                AIMessage(content=f"I have crafted a draft cover letter. Here's the link to your cover letter:\n{cover_letter_link}")
             ]
         }
 
