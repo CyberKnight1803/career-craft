@@ -1,7 +1,7 @@
 from typing import Dict, Any
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableConfig
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, AIMessage
 from langchain_openai import ChatOpenAI
 
 from app.prompts.preprocessor_prompt import SYSTEM_PROMPT, PROMPT
@@ -42,7 +42,7 @@ class QueryPreprocessorNode:
 
         # Prompt
         prompt = self.prompt_template.invoke({
-            "user_query": state.user_query
+            "user_query": state.messages[-1].content
         })
 
         print(prompt)
@@ -53,6 +53,7 @@ class QueryPreprocessorNode:
         print(output)
 
         return {
+            "messages": [AIMessage(content=output.intent)],
             "intent": output.intent,
             "is_jd_given": output.is_jd_given,
             "job_description": output.job_description
