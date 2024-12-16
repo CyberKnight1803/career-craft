@@ -52,8 +52,12 @@ class QueryPreprocessorNode:
 
         print(output)
 
+        content = output.intent 
+        if not output.is_jd_given:
+            content = "Please provide the job description."
+
         return {
-            "messages": [AIMessage(content=output.intent)],
+            "messages": [AIMessage(content=content)],
             "intent": output.intent,
             "is_jd_given": output.is_jd_given,
             "job_description": output.job_description

@@ -1,7 +1,7 @@
 {
     "personal_details": {
         "name": "John Doe",
-        "email": "johndoe@example.com",
+        "email": "john.doe@gmail.com",
         "phone": "+1 (555) 123-4567",
         "linkedin": "linkedin.com/in/johndoe",
         "github": "github.com/johndoe"

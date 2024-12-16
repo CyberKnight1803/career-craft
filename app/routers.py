@@ -10,3 +10,11 @@ def handle_doc_type(state: NodeState, config: RunnableConfig) -> Literal["resume
 
     elif state.intent == "cover_letter":
         return "cover_letter_rephraser"
+    
+
+def handle_missing_jd(state: NodeState, config: RunnableConfig) -> Literal["get_missing_jd", "jd_analysis"]:
+    if state.is_jd_given:
+        return "jd_analysis"
+
+    else:
+        return "get_missing_jd"

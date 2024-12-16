@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     POSTGRES_DB_URI: str = os.environ["POSTGRES_DB_URI"] 
     OPENAI_API_KEY: str = os.environ["OPENAI_API_KEY"]
     RESUME_PARSER_API_KEY: str = os.environ["RESUME_PARSER_API_KEY"]
+    SERVICE_ACCOUNT: str = os.environ["SERVICE_ACCOUNT"]
 
     LLM_MODEL: str = "gpt-4o"
     TEMPERATURE: float = 0.0
