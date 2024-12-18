@@ -21,15 +21,35 @@ from app.config import settings
 
 
 class CraftResumeNode:
+    """
+    A node that creates a professional resume from user-provided data, saves it as a Word document,
+    uploads it to Google Drive, and generates a shareable link.
+    """
+
     def __init__(self):
+        """
+        Initializes the CraftResumeNode by authenticating with Google Cloud and
+        setting up Google Docs and Drive API clients.
+        """
         # Authenticate with Google Cloud
         credentials = self.authenticate()
         self.doc_client = build("docs", "v1", credentials=credentials)
         self.drive_client = build("drive", "v3", credentials=credentials)
 
     def create_resume_from_json(self, data: Dict[str, Any]) -> Document:
+        """
+        Generates a resume as a Word document using the data provided in JSON format.
+
+        Args:
+            data (Dict[str, Any]): User's resume data, including personal details, education,
+                                   work experience, projects, and skills.
+
+        Returns:
+            Document: A Word document object representing the resume.
+        """
         from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_TAB_ALIGNMENT
 
+        # Helper function to set page margins and size
         def set_page_setup(section):
             # Set Letter size: 8.5" x 11"
             section.page_height = Inches(11)
@@ -40,6 +60,7 @@ class CraftResumeNode:
             section.left_margin = Inches(0.5)
             section.right_margin = Inches(0.5)
 
+        # Helper function to add a heading
         def add_heading(doc, text, size=12, bold=True, alignment=WD_ALIGN_PARAGRAPH.LEFT, right_text=None):
             paragraph = doc.add_paragraph()
             if right_text:
@@ -56,6 +77,7 @@ class CraftResumeNode:
             paragraph.paragraph_format.space_before = Pt(2)
             paragraph.paragraph_format.space_after = Pt(2)
 
+        # Helper function to add a bullet point
         def add_bullet(doc, text):
             paragraph = doc.add_paragraph(style="List Bullet")
             paragraph.add_run(text)
@@ -63,6 +85,7 @@ class CraftResumeNode:
             paragraph.paragraph_format.space_before = Pt(2)
             paragraph.paragraph_format.space_after = Pt(2)
 
+        # Helper function to add a paragraph
         def add_paragraph(doc, text, alignment=WD_ALIGN_PARAGRAPH.LEFT):
             paragraph = doc.add_paragraph(text)
             paragraph.alignment = alignment
@@ -70,6 +93,7 @@ class CraftResumeNode:
             paragraph.paragraph_format.space_before = Pt(2)
             paragraph.paragraph_format.space_after = Pt(2)
 
+        # Helper function to add a horizontal line
         def add_horizontal_line(doc):
             # Add a simple horizontal rule using underscores
             paragraph = doc.add_paragraph("_" * 120)
@@ -79,25 +103,24 @@ class CraftResumeNode:
         doc = Document()
         set_page_setup(doc.sections[0])  # Apply page setup
 
-        # Personal Details
+        # Add personal details
         personal = data["personal_details"]
         add_heading(doc, personal["name"], size=18, alignment=WD_ALIGN_PARAGRAPH.CENTER)  # Center-aligned name
         contact_info = f'{personal["phone"]} | {personal["email"]} | {personal["linkedin"]} | {personal["github"]}'
         add_paragraph(doc, contact_info, alignment=WD_ALIGN_PARAGRAPH.CENTER)
 
-        # Education
+        # Add Education section
         add_horizontal_line(doc)  # Add horizontal line before each major section
         add_heading(doc, "\nEducation", size=14)
         for edu in data["education"]:
             edu_title = f'{edu["degree"]}, {edu["institution"]}'
             edu_dates = f'{edu["start_date"]} - {edu["end_date"]}'
             add_heading(doc, edu_title, size=12, bold=True, right_text=edu_dates)
-
-            add_paragraph(doc, f"GPA: {edu["gpa"]}")
+            add_paragraph(doc, f"GPA: {edu['gpa']}")
             courses = ", ".join(edu["courses"])
             add_paragraph(doc, f"Courses: {courses}")
 
-        # Work Experience
+        # Add Work Experience section
         add_horizontal_line(doc)
         add_heading(doc, "\nWork Experience", size=14)
         for exp in data["experiences"]:
@@ -107,7 +130,7 @@ class CraftResumeNode:
             for desc in exp["description"]:
                 add_bullet(doc, desc)
 
-        # Projects
+        # Add Projects section
         add_horizontal_line(doc)
         add_heading(doc, "\nProjects", size=14)
         for proj in data["projects"]:
@@ -118,7 +141,7 @@ class CraftResumeNode:
             for desc in proj["description"]:
                 add_bullet(doc, desc)
 
-        # Skills
+        # Add Skills section
         add_horizontal_line(doc)
         add_heading(doc, "\nSkills", size=14)
         skills_text = ", ".join(data["skills"])
@@ -126,8 +149,18 @@ class CraftResumeNode:
 
         return doc
 
-
     def __call__(self, state: NodeState, config: RunnableConfig) -> Dict[str, Any] | None:
+        """
+        Orchestrates the process of creating a resume, uploading it to Google Drive,
+        and returning a sharable link.
+
+        Args:
+            state (NodeState): The input state containing user data.
+            config (RunnableConfig): The runtime configuration for the node.
+
+        Returns:
+            Dict[str, Any] | None: A response message containing the sharable link.
+        """
         # Create the resume
         resume_doc = self.create_resume_from_json(state.user_details)
 
@@ -148,7 +181,16 @@ class CraftResumeNode:
         }
 
     def upload_doc_to_google(self, file_path: str, name: str) -> str:
-        """Uploads a .docx file to Google Drive and converts it to a Google Doc."""
+        """
+        Uploads a .docx file to Google Drive and converts it to Google Docs format.
+
+        Args:
+            file_path (str): The path of the file to upload.
+            name (str): The name of the user, used to name the file in Drive.
+
+        Returns:
+            str: A sharable link to the uploaded Google Doc.
+        """
         # Metadata for the file
         file_metadata = {"name": f"{name} - Resume", "mimeType": "application/vnd.google-apps.document"}
         media = MediaFileUpload(file_path, mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
@@ -164,6 +206,15 @@ class CraftResumeNode:
         return f"https://docs.google.com/document/d/{uploaded_file['id']}/edit"
 
     def authenticate(self, scopes: List[str] = settings.GCP_SCOPES):
+        """
+        Authenticates with Google Cloud using a service account and retrieves credentials.
+
+        Args:
+            scopes (List[str]): The required scopes for Google APIs.
+
+        Returns:
+            Credentials: Google Cloud credentials for API access.
+        """
         secretmanager_client = secretmanager.SecretManagerServiceClient()
         response = secretmanager_client.access_secret_version(name=settings.GCP_SECRET_VERSION)
         service_account_info = json.loads(response.payload.data.decode("UTF-8"))

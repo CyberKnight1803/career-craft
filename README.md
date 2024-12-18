@@ -40,6 +40,12 @@ This is an GenAI app to assist you in crafting a good resume, cover-letters for 
 
 ## Usage 
 
+1. Give the user query with the request of a resume or a cover letter inside the text box under Messages. Also give the job description in addition to user request.
+
+2. Give the profile details in JSON format in the first text box under User Details.
+
+3. Press the submit button and the Google Docs link would be displayed on the right hand side message box.
+
 <img width="1512" alt="Screenshot 2024-12-17 at 7 10 06 PM" src="https://github.com/user-attachments/assets/7f2ff56b-fdad-45c5-9d67-491bee00c464" />
 
 

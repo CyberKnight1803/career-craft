@@ -1,0 +1,56 @@
+{
+    "personal_details": {
+        "name": "John Doe",
+        "email": "john.doe@gmail.com",
+        "phone": "+1 (555) 123-4567",
+        "linkedin": "linkedin.com/in/johndoe",
+        "github": "github.com/johndoe"
+    },
+    "education": [
+        {
+            "institution": "Columbia University",
+            "degree": "M.S. in Computer Science",
+            "start_date": "Aug 2023",
+            "end_date": "Dec 2024",
+            "gpa": "3.8/4.00",
+            "courses": ["Machine Learning", "NLP", "Computer Vision", "Applied ML on Cloud"]
+        },
+        {
+            "institution": "BITS Pilani",
+            "degree": "B.E. in Computer Science",
+            "start_date": "Aug 2019",
+            "end_date": "Jul 2023",
+            "gpa": "8.86/10.00",
+            "courses": ["Algorithms", "Operating Systems", "Databases", "Networks"]
+        }
+    ],
+    "experiences": [
+        {
+            "start_date": "May 2022",
+            "end_date": "Jul 2022",
+            "organization": "DataMind Analytics",
+            "position": "ML Research Intern",
+            "description": [
+                "Conducted exploratory data analysis on large retail datasets, identifying trends to improve sales forecasting accuracy by 15%.",
+                "Developed an anomaly detection model using scikit-learn to flag irregular transactions.",
+                "Visualized data insights with Tableau to assist business decision-making."
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "start_date": "Oct 2023",
+            "end_date": "Dec 2023",
+            "name": "Image Caption Generator",
+            "github_link": "github.com/johndoe/image-caption-generator",
+            "description": [
+                "Built a neural network model combining CNNs and LSTMs to generate captions for images.",
+                "Trained the model on the MS COCO dataset using TensorFlow.",
+                "Achieved BLEU score of 0.68 and deployed the system as a web app with Flask."
+            ]
+        }
+    ],
+    "skills": [
+        "Python", "Scikit-learn", "Keras","Pandas", "NumPy"
+    ]
+}
