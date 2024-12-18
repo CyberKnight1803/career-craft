@@ -92,8 +92,8 @@ class CraftResumeNode:
             edu_title = f'{edu["degree"]}, {edu["institution"]}'
             edu_dates = f'{edu["start_date"]} - {edu["end_date"]}'
             add_heading(doc, edu_title, size=12, bold=True, right_text=edu_dates)
-            add_paragraph(doc, f"GPA: {edu["gpa"]}")
 
+            add_paragraph(doc, f"GPA: {edu["gpa"]}")
             courses = ", ".join(edu["courses"])
             add_paragraph(doc, f"Courses: {courses}")
 
