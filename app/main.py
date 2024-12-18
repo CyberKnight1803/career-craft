@@ -9,9 +9,11 @@ from app.agents.resume_rephraser_node import ResumeRephraserNode
 from app.agents.cover_letter_rephraser_node import CoverLetterRephraserNode
 from app.agents.craft_resume_node import CraftResumeNode
 from app.agents.craft_cover_letter_node import CraftCoverLetterNode
+from app.agents.handler_nodes import get_missing_jd, get_missing_intent
 
 from app.routers import (
     handle_doc_type,
+    handle_missing_info
 )
 from app.types.node_state import NodeState
 from app.types.config_schema import ConfigSchema
@@ -27,11 +29,28 @@ graph_builder.add_node(node="cover_letter_rephraser", action=CoverLetterRephrase
 graph_builder.add_node(node="craft_resume", action=CraftResumeNode())
 graph_builder.add_node(node="craft_cover_letter", action=CraftCoverLetterNode())
 
+graph_builder.add_node(node="get_missing_jd", action=get_missing_jd)
+graph_builder.add_node(node="get_missing_intent", action=get_missing_intent)
+
 
 # # Add edges 
-graph_builder.add_edge("query_preprocessor", "jd_analysis")
-graph_builder.add_edge("jd_analysis", "exp_suggestor")
+# graph_builder.add_edge("query_preprocessor", "jd_analysis")
 
+
+graph_builder.add_conditional_edges(
+    "query_preprocessor",
+    handle_missing_info,
+    {
+        "get_missing_jd": "get_missing_jd",
+        "get_missing_intent": "get_missing_intent",
+        "jd_analysis": "jd_analysis"
+    }
+)
+
+graph_builder.add_edge("get_missing_jd", "query_preprocessor")
+graph_builder.add_edge("get_missing_intent", "query_preprocessor")
+
+graph_builder.add_edge("jd_analysis", "exp_suggestor")
 
 graph_builder.add_conditional_edges(
     "exp_suggestor",
@@ -55,4 +74,6 @@ graph_builder.set_entry_point("query_preprocessor")
 checkpointer = MemorySaver()
 graph = graph_builder.compile(
     checkpointer=checkpointer,
+    interrupt_before=["get_missing_jd", "get_missing_intent"],
+    interrupt_after=[]
 )

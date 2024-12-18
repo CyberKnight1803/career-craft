@@ -22,6 +22,9 @@ Sincerely,
 [Your Name]
 [LinkedIn Profile Link]
 [GitHub Link]
+
+
+Note: For links just write the link don't write links as normal text and not as markdown format. 
 """
 
 PROMPT = """
@@ -38,6 +41,9 @@ My experience:
 
 My projects:
 {user_projects}
+
+My Education: 
+{user_education}
 
 Job Responsibilities: 
 {job_responsibilities}.

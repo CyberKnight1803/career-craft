@@ -1,6 +1,7 @@
 {
   "dockerfile_lines": [
-    "COPY application_default_credentials.json ."
+    "COPY application_default_credentials.json .",
+    ""
   ],
   "graphs": {
     "agent": "./app/main.py:graph"

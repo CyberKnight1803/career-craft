@@ -4,6 +4,3 @@
 
 # Environments
 .env
-
-# Temp files
-**/*.ipynb

@@ -38,7 +38,7 @@ You're an expert judge who can select the relevant skills for the given job desc
 """
 
 SKILLS_PROMPT = """
-Select the relevant user's skills for the job description provided below:
+Select all the top 10 relevant user's skills for the job description provided below:
 
 User's skills: 
 {skills}
@@ -46,5 +46,5 @@ User's skills:
 Job Description:
 {job_description}
 
-NOTE: Select at max 5 skills only.
+NOTE: Select top 10 skills only.
 """

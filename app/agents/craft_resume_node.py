@@ -92,6 +92,8 @@ class CraftResumeNode:
             edu_title = f'{edu["degree"]}, {edu["institution"]}'
             edu_dates = f'{edu["start_date"]} - {edu["end_date"]}'
             add_heading(doc, edu_title, size=12, bold=True, right_text=edu_dates)
+
+            add_paragraph(doc, f"GPA: {edu["gpa"]}")
             courses = ", ".join(edu["courses"])
             add_paragraph(doc, f"Courses: {courses}")
 
@@ -141,9 +143,7 @@ class CraftResumeNode:
 
         return {
             "messages": [
-                AIMessage(content=f"""
-                          Your professionally formatted resume has been shared! Here's the link: {resume_link}
-                          """)
+                AIMessage(content=f"I have crafted a draft resume. Here's the link:\n{resume_link}")
             ]
         }
 

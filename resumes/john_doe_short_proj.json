@@ -81,39 +81,6 @@
                 "Frontend built with React; backend implemented in Django REST framework.",
                 "Implemented OAuth-based authentication and integrated Stripe for payments."
             ]
-        },
-        {
-            "start_date": "Sep 2023",
-            "end_date": "Dec 2023",
-            "name": "Real-Time Chat Application",
-            "github_link": "github.com/johndoe/realtime-chat",
-            "description": [
-                "Developed a real-time chat application with WebSocket support using Node.js and Express.",
-                "Implemented MongoDB for message persistence and Redis for session management.",
-                "Designed a responsive user interface using TailwindCSS."
-            ]
-        },
-        {
-            "start_date": "Mar 2024",
-            "end_date": "May 2024",
-            "name": "Predictive Maintenance with ML",
-            "github_link": "github.com/johndoe/predictive-maintenance",
-            "description": [
-                "Developed a predictive maintenance system for industrial equipment using LSTMs.",
-                "Used time-series data to predict potential failures with 92% accuracy.",
-                "Deployed the model using Flask and Docker for seamless integration."
-            ]
-        },
-        {
-            "start_date": "Oct 2023",
-            "end_date": "Dec 2023",
-            "name": "Image Caption Generator",
-            "github_link": "github.com/johndoe/image-caption-generator",
-            "description": [
-                "Built a neural network model combining CNNs and LSTMs to generate captions for images.",
-                "Trained the model on the MS COCO dataset using TensorFlow.",
-                "Achieved BLEU score of 0.68 and deployed the system as a web app with Flask."
-            ]
         }
     ],
     "skills": [

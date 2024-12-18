@@ -82,8 +82,26 @@ class SuggestorNode:
         rated_experiences.sort(reverse=True, key=lambda x: x[0])
         rated_projects.sort(reverse=True, key=lambda x: x[0])
 
-        state.user_details["experiences"] = [exp for _, exp in rated_experiences[:2]]
-        state.user_details["projects"] = [proj for _, proj in rated_projects[:2]]
+        if (
+            (len(rated_experiences) < 2 and len(rated_projects) < 2) or
+            (len(rated_experiences) > 2 and len(rated_projects) > 2)
+        ):
+            state.user_details["experiences"] = [exp for _, exp in rated_experiences[:2]]
+            state.user_details["projects"] = [proj for _, proj in rated_projects[:2]]
+
+        elif len(rated_experiences) < 2 and len(rated_projects) >= 2:
+            state.user_details["experiences"] = [exp for _, exp in rated_experiences[:2]]
+
+            extra_projects = 2 - len(state.user_details["experiences"])
+            state.user_details["projects"] = [proj for _, proj in rated_projects[:2 + extra_projects]]
+        
+        elif len(rated_experiences) >= 2 and len(rated_projects) < 2:
+            state.user_details["projects"] = [proj for _, proj in rated_projects[:2]]
+
+            extra_experiences = 2 - len(state.user_details["projects"])
+            state.user_details["experiences"] = [exp for _, exp in rated_experiences[:2 + extra_experiences]]
+
+
         state.user_details["skills"] = relevant_skills
 
         return {

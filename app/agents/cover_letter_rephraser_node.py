@@ -43,6 +43,7 @@ class CoverLetterRephraserNode:
             "job_skills": state.job_description.skills,
             "user_skills": state.user_details["skills"], 
             "user_experiences": json.dumps(state.user_details["experiences"], indent=2), 
+            "user_education": json.dumps(state.user_details["education"], indent=2),
             "user_projects": json.dumps(state.user_details["projects"], indent=2), 
             "user_details": json.dumps(state.user_details, indent=2),
             "date": datetime.now().strftime("%b %d, %Y")
