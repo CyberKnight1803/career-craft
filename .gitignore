@@ -4,3 +4,5 @@
 
 # Environments
 .env
+
+.application_deafult_credentials.json
