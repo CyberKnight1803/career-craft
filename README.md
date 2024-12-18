@@ -1,7 +1,7 @@
 # Career Craft
 
 ## Description
-This is an GenAI app to assist you in carfting a good resume, cover-letters for a particular job.
+This is an GenAI app to assist you in crafting a good resume, cover-letters for a particular job.
 
 ## Project Setup 
 1. Need to install docker. [installation guidelines
@@ -40,8 +40,30 @@ This is an GenAI app to assist you in carfting a good resume, cover-letters for 
 
 ## Usage 
 
+<img width="1512" alt="Screenshot 2024-12-17 at 7 10 06 PM" src="https://github.com/user-attachments/assets/7f2ff56b-fdad-45c5-9d67-491bee00c464" />
+
+
+<img width="1512" alt="Screenshot 2024-12-17 at 7 15 31 PM" src="https://github.com/user-attachments/assets/c5c18285-19c6-4f33-bd27-04cd84459cae" />
+
+
+<img width="1508" alt="Screenshot 2024-12-17 at 7 16 00 PM" src="https://github.com/user-attachments/assets/1d9a7bb6-9556-41d5-8869-0271ff1b992d" />
 
 
 
 ## Troubleshooting
-If any error occurs, the first point of debugging should be checking the logs in LangGraph Studio, from there on you can navigate through the source code and figure out the root cause!
+If you encounter any issues while running the application, follow these steps:
+
+1. Check the Logs:
+    * Access logs from LangGraph Studio's dashboard to identify the root cause.
+
+2. Verify Environment Variables:
+    * Ensure the .env file is correctly configured with all required credentials.
+
+3. Docker Container Issues:
+    * Restart Docker Desktop and relaunch LangGraph Studio.
+
+4. Credential Problems:
+    * Ensure Google Cloud credentials (application_default_credentials.json) are valid and the path is correctly set.
+
+5. General Debugging:
+    * Navigate through the source code to debug specific issues.
